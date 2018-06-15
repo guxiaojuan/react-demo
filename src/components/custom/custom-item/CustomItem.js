@@ -7,21 +7,14 @@ import {connect} from 'react-redux';
 
 class CustomItem extends React.Component {
 	render () {
-		return(
-			<div>
-				<p>11111</p>
-				<p>{this.props}</p>
-			</div>
+		return (
+			<li className="custom-item" style={{textDecoration: this.props.completed ? 'line-through' : 'none'}}
+				onClick={ () => {this.props.dispatch(changeCustomItemCompletionStatusAction(this.props.id))}}>
+				<span>{this.props.text}</span>
+				<span>{''+this.props.completed}</span>
+				<CheckBox checked={this.props.completed}/>
+			</li>
 		)
-		// return (
-		// 	<li className="custom-item" style={{textDecoration: this.props.completed ? 'line-through' : 'none'}}
-		// 		onClick={ () => {this.props.dispatch(changeCustomItemCompletionStatusAction(this.props.id))}}>
-		// 		<span>{this.props.text} {''+this.props.completed}</span>
-		// 		<CheckBox checked={this.props.completed}/>
-		//
-		// 		<p>1111</p>
-		// 	</li>
-		// )
 	}
 }
 

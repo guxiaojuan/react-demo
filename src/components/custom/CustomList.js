@@ -1,6 +1,7 @@
 import React from 'react';
 import AppBar from '../common/appBar/appBar'
 import CustomItem from './custom-item/CustomItem'
+import Circle from '../../container/circle'
 import {addCustomItemAction} from "../../redux/modules/actions";
 import {connect} from 'react-redux';
 
@@ -10,19 +11,35 @@ class CustomList extends React.Component {
 		this.state = {
 			text: ''
 		}
-	}
+	};
+	componentWillReceiveProps () {
+		// console.log("---------will--receive----")
+		// console.log(this.props);
+	};
+	componentWillUpdate () {
+		// console.log('-----will update=------');
+		// console.log(this.props);
+	};
+	componentDidUpdate () {
+		// console.log('-------did update----------');
+		// console.log(this.props)
+	};
+	showList () {
+		let data = [];
+		this.props.customList.map(item => {
+			data.push(<CustomItem key={item.id} id={item.id} completed={item.completed} text={item.text}/>)
+		})
+		console.log('======================')
+		console.log(data)
+		return data;
+	};
 	render () {
 		return (
 			<section className="custom">
 				<AppBar title="习惯"/>
 
 				<ul>
-					{this.props.customList && this.props.customList.map(item => {
-						console.log('==========================');
-						console.log(item.id);
-						console.log(item.text);
-						<CustomItem key={item.id} id={item.id} completed={item.completed} text={item.text}/>
-					})}
+					{this.showList()}
 				</ul>
 
 				<div>
@@ -32,9 +49,6 @@ class CustomList extends React.Component {
 						});
 					}} />
 					<button onClick={() => {
-						console.log("add click");
-						console.log(this.props);
-
 						this.props.dispatch(addCustomItemAction(this.state.text));
 						this.setState({
 							text: ''
